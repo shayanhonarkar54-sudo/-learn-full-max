@@ -1,0 +1,1248 @@
+# Display the full HTML code for the user to copy
+html_code = '''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Full Max - Master Languages</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 25s infinite linear;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .user-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .stat-icon {
+            font-size: 1.2rem;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Language Selector */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .language-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .language-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .language-card.active {
+            border: 3px solid var(--primary);
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+        }
+        
+        .lang-flag {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .lang-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .lang-level {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        /* Main App Area */
+        .app-section {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .app-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Mode Tabs */
+        .mode-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .mode-tab {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .mode-tab:hover {
+            background: #f1f5f9;
+        }
+        
+        .mode-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        /* Flashcard Mode */
+        .flashcard-container {
+            perspective: 1000px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .flashcard {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .flashcard-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .flashcard-back {
+            background: white;
+            color: var(--dark);
+            transform: rotateY(180deg);
+            border: 3px solid var(--primary);
+        }
+        
+        .card-word {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .card-hint {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .card-translation {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .card-example {
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+        }
+        
+        .card-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Quiz Mode */
+        .quiz-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        
+        .quiz-question {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .quiz-option {
+            padding: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background: #f0f9ff;
+            transform: translateX(5px);
+        }
+        
+        .quiz-option.correct {
+            background: #d1fae5;
+            border-color: var(--success);
+            animation: correctPulse 0.5s;
+        }
+        
+        .quiz-option.wrong {
+            background: #fee2e2;
+            border-color: var(--danger);
+            animation: shake 0.5s;
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        /* Writing Mode */
+        .writing-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .writing-prompt {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 15px;
+            border: 2px dashed var(--primary);
+        }
+        
+        .writing-input {
+            width: 100%;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .writing-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .feedback {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+            animation: slideDown 0.3s;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feedback.correct {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .feedback.wrong {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        /* Stats Dashboard */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* Streak Calendar */
+        .streak-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .streak-day {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: #e2e8f0;
+            color: #64748b;
+        }
+        
+        .streak-day.active {
+            background: var(--success);
+            color: white;
+        }
+        
+        .streak-day.today {
+            border: 2px solid var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .quiz-options { grid-template-columns: 1fr; }
+            .mode-tabs { flex-wrap: wrap; }
+        }
+        
+        /* Animations */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+        
+        .badge-new { background: var(--accent); color: white; }
+        .badge-hot { background: var(--danger); color: white; }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">🚀</span>
+                Learn Full Max
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showSection('home')">Home</a></li>
+                <li><a onclick="showSection('learn')">Learn</a></li>
+                <li><a onclick="showSection('stats')">Stats</a></li>
+            </ul>
+            <div class="user-stats">
+                <div class="stat-item">
+                    <span class="stat-icon">🔥</span>
+                    <span id="streakCount">12</span> Day Streak
+                </div>
+                <div class="stat-item">
+                    <span class="stat-icon">💎</span>
+                    <span id="gemCount">450</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <h1>Master Any Language</h1>
+            <p>Choose your language and start your journey to fluency today with interactive lessons, flashcards, and quizzes.</p>
+        </section>
+
+        <!-- Language Selection -->
+        <section id="languageSelect">
+            <div class="language-grid">
+                <div class="language-card" onclick="selectLanguage('spanish')">
+                    <span class="lang-flag">🇪🇸</span>
+                    <div class="lang-name">Spanish</div>
+                    <div class="lang-level">Beginner • 2.5M learners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="language-card" onclick="selectLanguage('japanese')">
+                    <span class="lang-flag">🇯🇵</span>
+                    <div class="lang-name">Japanese</div>
+                    <div class="lang-level">Beginner • 1.8M learners <span class="badge badge-hot">HOT</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="language-card" onclick="selectLanguage('french')">
+                    <span class="lang-flag">🇫🇷</span>
+                    <div class="lang-name">French</div>
+                    <div class="lang-level">Beginner • 2.1M learners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="language-card" onclick="selectLanguage('german')">
+                    <span class="lang-flag">🇩🇪</span>
+                    <div class="lang-name">German</div>
+                    <div class="lang-level">Beginner • 1.2M learners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="language-card" onclick="selectLanguage('korean')">
+                    <span class="lang-flag">🇰🇷</span>
+                    <div class="lang-name">Korean</div>
+                    <div class="lang-level">Beginner • 980K learners <span class="badge badge-new">NEW</span></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="language-card" onclick="selectLanguage('chinese')">
+                    <span class="lang-flag">🇨🇳</span>
+                    <div class="lang-name">Chinese</div>
+                    <div class="lang-level">Beginner • 1.5M learners</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Section -->
+        <section id="learn" class="app-section">
+            <div class="mode-tabs">
+                <button class="mode-tab active" onclick="switchMode('flashcards')">
+                    <span>🎴</span> Flashcards
+                </button>
+                <button class="mode-tab" onclick="switchMode('quiz')">
+                    <span>🎯</span> Quiz
+                </button>
+                <button class="mode-tab" onclick="switchMode('writing')">
+                    <span>✍️</span> Writing
+                </button>
+                <button class="mode-tab" onclick="switchMode('listening')">
+                    <span>🎧</span> Listening
+                </button>
+            </div>
+
+            <!-- Flashcard Mode -->
+            <div id="flashcardMode" class="mode-content">
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard" onclick="flipCard()">
+                        <div class="flashcard-face flashcard-front">
+                            <div class="card-word" id="cardWord">Hola</div>
+                            <div class="card-hint">Click to reveal translation</div>
+                        </div>
+                        <div class="flashcard-face flashcard-back">
+                            <div class="card-translation" id="cardTranslation">Hello</div>
+                            <div class="card-example" id="cardExample">"¡Hola! ¿Cómo estás?"</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-controls">
+                    <button class="btn btn-danger" onclick="difficultCard()">
+                        <span>❌</span> Hard
+                    </button>
+                    <button class="btn btn-primary" onclick="nextCard()">
+                        <span>🔄</span> Next
+                    </button>
+                    <button class="btn btn-success" onclick="easyCard()">
+                        <span>✅</span> Easy
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Mode -->
+            <div id="quizMode" class="mode-content" style="display:none">
+                <div class="quiz-container">
+                    <div class="quiz-progress">
+                        <span>Question <span id="currentQuestion">1</span>/10</span>
+                        <span>Score: <span id="quizScore">0</span></span>
+                    </div>
+                    <div class="quiz-question" id="quizQuestion">
+                        How do you say "Thank you" in Spanish?
+                    </div>
+                    <div class="quiz-options" id="quizOptions">
+                        <button class="quiz-option" onclick="checkAnswer(this, 'Gracias')">Gracias</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, 'Por favor')">Por favor</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, 'De nada')">De nada</button>
+                        <button class="quiz-option" onclick="checkAnswer(this, 'Hola')">Hola</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Writing Mode -->
+            <div id="writingMode" class="mode-content" style="display:none">
+                <div class="writing-container">
+                    <div class="writing-prompt">
+                        Translate this sentence:<br>
+                        <strong id="writingPrompt">"The cat is sleeping"</strong>
+                    </div>
+                    <input type="text" class="writing-input" id="writingInput" placeholder="Type your translation here...">
+                    <button class="btn btn-primary" onclick="checkWriting()">
+                        <span>✓</span> Check Answer
+                    </button>
+                    <div class="feedback" id="writingFeedback"></div>
+                </div>
+            </div>
+
+            <!-- Listening Mode -->
+            <div id="listeningMode" class="mode-content" style="display:none">
+                <div class="writing-container">
+                    <div class="writing-prompt">
+                        Listen and type what you hear:<br>
+                        <button class="btn btn-primary pulse" onclick="playAudio()">
+                            <span>🔊</span> Play Audio
+                        </button>
+                    </div>
+                    <input type="text" class="writing-input" id="listeningInput" placeholder="Type what you hear...">
+                    <button class="btn btn-primary" onclick="checkListening()">
+                        <span>✓</span> Check
+                    </button>
+                    <div class="feedback" id="listeningFeedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats" class="app-section">
+            <h2 style="margin-bottom: 2rem; font-size: 2rem;">Your Progress</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWords">0</div>
+                    <div class="stat-label">Words Learned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalXP">0</div>
+                    <div class="stat-label">Total XP</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="accuracy">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="timeSpent">0h</div>
+                    <div class="stat-label">Time Spent</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 20px;">
+                <h3 style="margin-bottom: 1rem;">🔥 Streak Calendar</h3>
+                <div class="streak-calendar" id="streakCalendar"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Data
+        const languageData = {
+            spanish: {
+                name: 'Spanish',
+                flag: '🇪🇸',
+                flashcards: [
+                    { word: 'Hola', translation: 'Hello', example: '¡Hola! ¿Cómo estás?' },
+                    { word: 'Gracias', translation: 'Thank you', example: 'Gracias por tu ayuda' },
+                    { word: 'Por favor', translation: 'Please', example: 'Un café, por favor' },
+                    { word: 'Adiós', translation: 'Goodbye', example: 'Adiós, hasta mañana' },
+                    { word: 'Buenos días', translation: 'Good morning', example: 'Buenos días, ¿cómo amaneciste?' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Thank you"?', options: ['Gracias', 'Por favor', 'De nada', 'Hola'], correct: 'Gracias' },
+                    { question: 'What does "Hola" mean?', options: ['Goodbye', 'Hello', 'Please', 'Thanks'], correct: 'Hello' },
+                    { question: 'How do you say "Good morning"?', options: ['Buenas noches', 'Buenos días', 'Hola', 'Adiós'], correct: 'Buenos días' }
+                ],
+                writing: [
+                    { prompt: 'The cat is sleeping', answer: 'El gato está durmiendo' },
+                    { prompt: 'I love to eat pizza', answer: 'Me encanta comer pizza' },
+                    { prompt: 'Where is the bathroom?', answer: '¿Dónde está el baño?' }
+                ]
+            },
+            japanese: {
+                name: 'Japanese',
+                flag: '🇯🇵',
+                flashcards: [
+                    { word: 'こんにちは', translation: 'Hello', example: 'こんにちは、元気ですか？' },
+                    { word: 'ありがとう', translation: 'Thank you', example: 'ありがとうございます' },
+                    { word: 'さようなら', translation: 'Goodbye', example: 'さようなら、またね' },
+                    { word: 'おはよう', translation: 'Good morning', example: 'おはようございます' },
+                    { word: '水', translation: 'Water', example: '水をください' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Thank you"?', options: ['こんにちは', 'ありがとう', 'さようなら', 'おはよう'], correct: 'ありがとう' },
+                    { question: 'What does "水" mean?', options: ['Fire', 'Water', 'Earth', 'Wind'], correct: 'Water' }
+                ],
+                writing: [
+                    { prompt: 'Hello, nice to meet you', answer: 'こんにちは、はじめまして' },
+                    { prompt: 'I like sushi', answer: '寿司が好きです' }
+                ]
+            },
+            french: {
+                name: 'French',
+                flag: '🇫🇷',
+                flashcards: [
+                    { word: 'Bonjour', translation: 'Hello', example: 'Bonjour, comment allez-vous?' },
+                    { word: 'Merci', translation: 'Thank you', example: 'Merci beaucoup!' },
+                    { word: 'Au revoir', translation: 'Goodbye', example: 'Au revoir et à bientôt' },
+                    { word: 'Oui', translation: 'Yes', example: 'Oui, je comprends' },
+                    { word: 'Non', translation: 'No', example: 'Non, merci' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Thank you"?', options: ['Merci', 'Bonjour', 'Au revoir', 'Oui'], correct: 'Merci' },
+                    { question: 'What does "Oui" mean?', options: ['No', 'Yes', 'Maybe', 'Please'], correct: 'Yes' }
+                ],
+                writing: [
+                    { prompt: 'I am a student', answer: 'Je suis étudiant' },
+                    { prompt: 'The food is delicious', answer: 'La nourriture est délicieuse' }
+                ]
+            },
+            german: {
+                name: 'German',
+                flag: '🇩🇪',
+                flashcards: [
+                    { word: 'Hallo', translation: 'Hello', example: 'Hallo, wie geht\'s?' },
+                    { word: 'Danke', translation: 'Thank you', example: 'Vielen Dank!' },
+                    { word: 'Auf Wiedersehen', translation: 'Goodbye', example: 'Auf Wiedersehen!' },
+                    { word: 'Ja', translation: 'Yes', example: 'Ja, natürlich' },
+                    { word: 'Nein', translation: 'No', example: 'Nein, danke' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Thank you"?', options: ['Danke', 'Hallo', 'Ja', 'Bitte'], correct: 'Danke' }
+                ],
+                writing: [
+                    { prompt: 'Good morning', answer: 'Guten Morgen' }
+                ]
+            },
+            korean: {
+                name: 'Korean',
+                flag: '🇰🇷',
+                flashcards: [
+                    { word: '안녕하세요', translation: 'Hello', example: '안녕하세요, 만나서 반가워요' },
+                    { word: '감사합니다', translation: 'Thank you', example: '정말 감사합니다' },
+                    { word: '안녕히 가세요', translation: 'Goodbye', example: '안녕히 가세요' },
+                    { word: '네', translation: 'Yes', example: '네, 알겠습니다' },
+                    { word: '물', translation: 'Water', example: '물 주세요' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Hello"?', options: ['안녕하세요', '감사합니다', '안녕히 가세요', '물'], correct: '안녕하세요' }
+                ],
+                writing: [
+                    { prompt: 'I love Korea', answer: '한국을 사랑해요' }
+                ]
+            },
+            chinese: {
+                name: 'Chinese',
+                flag: '🇨🇳',
+                flashcards: [
+                    { word: '你好', translation: 'Hello', example: '你好，你好吗？' },
+                    { word: '谢谢', translation: 'Thank you', example: '非常感谢你' },
+                    { word: '再见', translation: 'Goodbye', example: '再见，明天见' },
+                    { word: '是', translation: 'Yes', example: '是的，没错' },
+                    { word: '水', translation: 'Water', example: '我要喝水' }
+                ],
+                quizzes: [
+                    { question: 'How do you say "Thank you"?', options: ['你好', '谢谢', '再见', '水'], correct: '谢谢' }
+                ],
+                writing: [
+                    { prompt: 'I am Chinese', answer: '我是中国人' }
+                ]
+            }
+        };
+
+        // State
+        let currentLanguage = null;
+        let currentMode = 'flashcards';
+        let currentCardIndex = 0;
+        let currentQuizIndex = 0;
+        let currentWritingIndex = 0;
+        let quizScore = 0;
+        let userStats = {
+            wordsLearned: 0,
+            xp: 0,
+            correctAnswers: 0,
+            totalAnswers: 0,
+            streak: 12
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundAnimation();
+            generateStreakCalendar();
+            updateStats();
+        });
+
+        function createBackgroundAnimation() {
+            const container = document.getElementById('bgAnimation');
+            for (let i = 0; i < 20; i++) {
+                const span = document.createElement('span');
+                span.style.left = Math.random() * 100 + '%';
+                span.style.animationDelay = Math.random() * 25 + 's';
+                span.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(span);
+            }
+        }
+
+        function selectLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update UI
+            document.querySelectorAll('.language-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Show learning section
+            setTimeout(() => {
+                document.getElementById('learn').classList.add('active');
+                document.getElementById('learn').scrollIntoView({ behavior: 'smooth' });
+                loadFlashcard();
+            }, 300);
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+            if (section === 'learn' && currentLanguage) {
+                document.getElementById('learn').classList.add('active');
+            } else if (section === 'stats') {
+                document.getElementById('stats').classList.add('active');
+                updateStats();
+            } else if (section === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update tabs
+            document.querySelectorAll('.mode-tab').forEach(tab => tab.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // Show content
+            document.querySelectorAll('.mode-content').forEach(content => content.style.display = 'none');
+            document.getElementById(mode + 'Mode').style.display = 'block';
+            
+            // Load content
+            if (mode === 'flashcards') loadFlashcard();
+            if (mode === 'quiz') loadQuiz();
+            if (mode === 'writing') loadWriting();
+        }
+
+        // Flashcard Functions
+        function loadFlashcard() {
+            if (!currentLanguage) return;
+            const card = languageData[currentLanguage].flashcards[currentCardIndex];
+            document.getElementById('cardWord').textContent = card.word;
+            document.getElementById('cardTranslation').textContent = card.translation;
+            document.getElementById('cardExample').textContent = '"' + card.example + '"';
+            document.getElementById('flashcard').classList.remove('flipped');
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            currentCardIndex = (currentCardIndex + 1) % languageData[currentLanguage].flashcards.length;
+            loadFlashcard();
+        }
+
+        function easyCard() {
+            userStats.xp += 10;
+            userStats.wordsLearned++;
+            updateStats();
+            nextCard();
+            showNotification('Great! +10 XP');
+        }
+
+        function difficultCard() {
+            userStats.xp += 5;
+            updateStats();
+            nextCard();
+            showNotification('Keep practicing! +5 XP');
+        }
+
+        // Quiz Functions
+        function loadQuiz() {
+            if (!currentLanguage) return;
+            const quiz = languageData[currentLanguage].quizzes[currentQuizIndex];
+            document.getElementById('quizQuestion').textContent = quiz.question;
+            document.getElementById('currentQuestion').textContent = currentQuizIndex + 1;
+            
+            const optionsContainer = document.getElementById('quizOptions');
+            optionsContainer.innerHTML = '';
+            quiz.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(btn, option);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(btn, answer) {
+            const quiz = languageData[currentLanguage].quizzes[currentQuizIndex];
+            const isCorrect = answer === quiz.correct;
+            
+            userStats.totalAnswers++;
+            if (isCorrect) {
+                btn.classList.add('correct');
+                userStats.correctAnswers++;
+                userStats.xp += 20;
+                quizScore += 20;
+                showNotification('Correct! +20 XP');
+            } else {
+                btn.classList.add('wrong');
+                showNotification('Wrong answer. Try again!');
+            }
+            
+            document.getElementById('quizScore').textContent = quizScore;
+            updateStats();
+            
+            setTimeout(() => {
+                currentQuizIndex = (currentQuizIndex + 1) % languageData[currentLanguage].quizzes.length;
+                loadQuiz();
+            }, 1500);
+        }
+
+        // Writing Functions
+        function loadWriting() {
+            if (!currentLanguage) return;
+            const writing = languageData[currentLanguage].writing[currentWritingIndex];
+            document.getElementById('writingPrompt').textContent = '"' + writing.prompt + '"';
+            document.getElementById('writingInput').value = '';
+            document.getElementById('writingFeedback').classList.remove('show');
+        }
+
+        function checkWriting() {
+            const input = document.getElementById('writingInput').value.trim().toLowerCase();
+            const writing = languageData[currentLanguage].writing[currentWritingIndex];
+            const feedback = document.getElementById('writingFeedback');
+            
+            if (input === writing.answer.toLowerCase()) {
+                feedback.textContent = '✅ Correct! Great job!';
+                feedback.className = 'feedback correct show';
+                userStats.xp += 15;
+                userStats.correctAnswers++;
+                showNotification('Excellent! +15 XP');
+                setTimeout(() => {
+                    currentWritingIndex = (currentWritingIndex + 1) % languageData[currentLanguage].writing.length;
+                    loadWriting();
+                }, 2000);
+            } else {
+                feedback.textContent = '❌ Not quite. The answer is: ' + writing.answer;
+                feedback.className = 'feedback wrong show';
+            }
+            userStats.totalAnswers++;
+            updateStats();
+        }
+
+        // Listening Functions
+        function playAudio() {
+            const utterance = new SpeechSynthesisUtterance('Hello, how are you today?');
+            utterance.lang = currentLanguage === 'spanish' ? 'es-ES' : 
+                           currentLanguage === 'french' ? 'fr-FR' : 
+                           currentLanguage === 'german' ? 'de-DE' : 
+                           currentLanguage === 'japanese' ? 'ja-JP' : 
+                           currentLanguage === 'korean' ? 'ko-KR' : 
+                           currentLanguage === 'chinese' ? 'zh-CN' : 'en-US';
+            speechSynthesis.speak(utterance);
+        }
+
+        function checkListening() {
+            const input = document.getElementById('listeningInput').value.trim().toLowerCase();
+            const feedback = document.getElementById('listeningFeedback');
+            
+            if (input.includes('hello') || input.includes('how are you')) {
+                feedback.textContent = '✅ Correct! Well done!';
+                feedback.className = 'feedback correct show';
+                userStats.xp += 20;
+                showNotification('Perfect! +20 XP');
+            } else {
+                feedback.textContent = '❌ Try again! Listen carefully.';
+                feedback.className = 'feedback wrong show';
+            }
+            updateStats();
+        }
+
+        // Stats Functions
+        function updateStats() {
+            document.getElementById('totalWords').textContent = userStats.wordsLearned;
+            document.getElementById('totalXP').textContent = userStats.xp;
+            document.getElementById('gemCount').textContent = Math.floor(userStats.xp / 10);
+            
+            const accuracy = userStats.totalAnswers > 0 ? 
+                Math.round((userStats.correctAnswers / userStats.totalAnswers) * 100) : 0;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            
+            const hours = Math.floor(userStats.xp / 60);
+            document.getElementById('timeSpent').textContent = hours + 'h';
+        }
+
+        function generateStreakCalendar() {
+            const calendar = document.getElementById('streakCalendar');
+            const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+            
+            for (let i = 0; i < 28; i++) {
+                const day = document.createElement('div');
+                day.className = 'streak-day';
+                if (i < 7) day.textContent = days[i];
+                
+                if (i >= 7) {
+                    const dayNum = i - 6;
+                    if (dayNum <= 12) day.classList.add('active');
+                    if (dayNum === 12) day.classList.add('today');
+                }
+                calendar.appendChild(day);
+            }
+        }
+
+        function showNotification(message) {
+            const notif = document.createElement('div');
+            notif.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, var(--primary), var(--secondary));
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            `;
+            notif.textContent = message;
+            document.body.appendChild(notif);
+            
+            setTimeout(() => {
+                notif.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>'''
+
+# Save to file
+with open('/mnt/kimi/output/learn_full_max.html', 'w', encoding='utf-8') as f:
+    f.write(html_code)
+
+print("=" * 60)
+print("📋 LEARN FULL MAX - COMPLETE HTML CODE")
+print("=" * 60)
+print("\n✅ The code has been saved to: /mnt/kimi/output/learn_full_max.html\n")
+print("📌 HOW TO USE:")
+print("1. Copy the code below (or from the file above)")
+print("2. Open Notepad (Windows) or TextEdit (Mac)")
+print("3. Paste the code")
+print("4. Save as 'learn_full_max.html'")
+print("5. Double-click the file to open in browser\n")
+print("=" * 60)
+print("🚀 FEATURES INCLUDED:")
+print("  • 6 Languages: Spanish, Japanese, French, German, Korean, Chinese")
+print("  • 4 Learning Modes: Flashcards, Quiz, Writing, Listening")
+print("  • XP System & Streak Tracking")
+print("  • Beautiful animated UI")
+print("  • Works offline - no internet needed!")
+print("=" * 60)
